@@ -11,7 +11,7 @@ var attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenS
   }).addTo(map1);
 
 
-  $.getJson('data/RemediationSites.geojson', function() {
+  $.getJSON('data/RemediationSites.geojson', function() {
     L.geoJson().addTo(map1);
   });
 
