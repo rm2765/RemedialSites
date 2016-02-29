@@ -10,10 +10,51 @@ var attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenS
     attribution: attribution
   }).addTo(map1);
 
+var geojson;
 
-  $.getJSON('data/RemediationSites.geojson', function() {
-    L.geoJson().addTo(map1);
+  $.getJSON('data/BCP.geojson', function(name) {
+    geojson= L.geoJson(name).addTo(map1);
   });
+
+ 
+
+
+  function mouseoverFunction(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+
+     console.log(layer.feature.properties.name);
+    $('#infoWindow').text(layer.feature.properties.name);
+
+    }
+
+      function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+    }
+
+
+     function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: mouseoverFunction,
+        mouseout: resetHighlight
+        //click: zoomToFeature
+    });
+  }
+
+
+
+
+
 
   // var lived_style = {
   //     radius: 10,
@@ -35,7 +76,7 @@ var attribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenS
 
 
 
-  // //this function is set to run when a user mouses over any polygon
+  //this function is set to run when a user mouses over any polygon
   // function mouseoverFunction(e) {
   //   var layer = e.target;
 
